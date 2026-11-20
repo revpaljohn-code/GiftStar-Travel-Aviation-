@@ -1,0 +1,137 @@
+{
+  "entities": {
+    "UserPublic": {
+      "title": "UserPublic",
+      "description": "Public display profile for an authenticated traveler or agent",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "role": { "type": "string", "enum": ["traveler", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName", "role", "createdAt", "updatedAt"]
+    },
+    "UserPrivate": {
+      "title": "UserPrivate",
+      "description": "Isolated PII record for user email, phone, and travel preferences",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "email": { "type": "string", "format": "email", "maxLength": 200 },
+        "phone": { "type": "string", "maxLength": 40 },
+        "homeAirport": { "type": "string", "maxLength": 60 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "updatedAt"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Customer travel booking across flights, hotels, tour packages, or custom AI itineraries",
+      "type": "object",
+      "properties": {
+        "bookingRef": { "type": "string", "minLength": 4, "maxLength": 32, "pattern": "^[A-Z0-9\\-]+$" },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "customerName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "customerEmail": { "type": "string", "format": "email", "maxLength": 200 },
+        "customerPhone": { "type": "string", "minLength": 5, "maxLength": 40 },
+        "bookingType": { "type": "string", "enum": ["package", "flight", "hotel", "custom_itinerary"] },
+        "itemId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "itemTitle": { "type": "string", "minLength": 2, "maxLength": 160 },
+        "destination": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "travelDate": { "type": "string", "minLength": 4, "maxLength": 32 },
+        "returnDate": { "type": "string", "maxLength": 32 },
+        "guests": { "type": "integer" },
+        "cabinOrTier": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "totalUsd": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "ticketed", "cancelled", "completed"] },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "googleDocId": { "type": "string", "maxLength": 160 },
+        "googleDocUrl": { "type": "string", "maxLength": 500 },
+        "sheetSynced": { "type": "boolean" },
+        "emailSent": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "bookingRef",
+        "userId",
+        "customerName",
+        "customerEmail",
+        "customerPhone",
+        "bookingType",
+        "itemId",
+        "itemTitle",
+        "destination",
+        "travelDate",
+        "guests",
+        "cabinOrTier",
+        "totalUsd",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Verified customer testimonial and route rating",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "authorName": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "authorRole": { "type": "string", "maxLength": 100 },
+        "routeOrPackage": { "type": "string", "minLength": 2, "maxLength": 140 },
+        "rating": { "type": "integer" },
+        "comment": { "type": "string", "minLength": 10, "maxLength": 1200 },
+        "status": { "type": "string", "enum": ["published", "hidden"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "authorName", "routeOrPackage", "rating", "comment", "status", "createdAt", "updatedAt"]
+    },
+    "TravelPackage": {
+      "title": "TravelPackage",
+      "description": "Admin-managed luxury tour package",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "minLength": 3, "maxLength": 140 },
+        "destination": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "region": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "durationDays": { "type": "integer" },
+        "priceUsd": { "type": "number" },
+        "tier": { "type": "string", "enum": ["Signature", "Executive", "Bespoke"] },
+        "summary": { "type": "string", "minLength": 10, "maxLength": 600 },
+        "highlights": { "type": "array" },
+        "active": { "type": "boolean" },
+        "createdBy": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "destination", "region", "durationDays", "priceUsd", "tier", "summary", "highlights", "active", "createdBy", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserPublic" },
+      "description": "Public traveler profile without PII"
+    },
+    "/users/{userId}/private/{docId}": {
+      "schema": { "$ref": "#/entities/UserPrivate" },
+      "description": "Isolated PII storage for traveler email and phone"
+    },
+    "/bookings/{bookingId}": {
+      "schema": { "$ref": "#/entities/Booking" },
+      "description": "Travel bookings created by travelers and managed by admins"
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Customer reviews and ratings"
+    },
+    "/packages/{packageId}": {
+      "schema": { "$ref": "#/entities/TravelPackage" },
+      "description": "Admin-managed curated tour packages"
+    }
+  }
+}

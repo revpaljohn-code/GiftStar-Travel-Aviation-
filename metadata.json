@@ -1,0 +1,6 @@
+{
+  "name": "Giftstar Travel Aviation",
+  "description": "AI-powered luxury travel agency and aviation concierge from Juba to the world, featuring interactive Google Maps, personalized Gemini trip planning, real-time bookings, and Google Workspace automation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
